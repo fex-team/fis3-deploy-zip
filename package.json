@@ -1,0 +1,28 @@
+{
+  "name": "fis3-deploy-zip",
+  "version": "1.0.0",
+  "description": "zip compress for fis3 deploy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fex-team/fis3-deploy-zip.git"
+  },
+  "keywords": [
+    "fis3",
+    "zip",
+    "deploy"
+  ],
+  "author": "fis",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/fex-team/fis3-deploy-zip/issues"
+  },
+  "homepage": "https://github.com/fex-team/fis3-deploy-zip",
+  "dependencies": {
+    "concat-stream": "1.4.8",
+    "yazl": "2.2.2"
+  }
+}
