@@ -1,6 +1,6 @@
 {
   "name": "fis3-deploy-zip",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "zip compress for fis3 deploy",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/fex-team/fis3-deploy-zip",
   "dependencies": {
-    "concat-stream": "1.4.8",
-    "yazl": "2.2.2"
+    "archiver": "^1.0.0",
+    "concat-stream": "1.4.8"
   }
 }

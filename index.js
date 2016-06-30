@@ -1,5 +1,4 @@
-
-var yazl = require('yazl');
+var archiver = require('archiver');
 var concatStream = require('concat-stream');
 
 module.exports = function(options, modified, total, callback) {
@@ -10,35 +9,31 @@ module.exports = function(options, modified, total, callback) {
   }
 
   var root = fis.project.getProjectPath();
-  var zipfile = new yazl.ZipFile();
+  var zipfile = archiver.create('zip');
+
+  zipfile.pipe(concatStream(function(data) {
+    var file = fis.file(root, options.filename || 'all.zip');
+    file.setContent(data);
+
+    if (!options.keep) {
+      modified.splice(0, modified.length);
+      total.splice(0, total.length);
+    }
+
+    modified.push(file);
+    total.push(file);
+    callback();
+  }));
 
   list.forEach(function(file) {
     var filepath = file.getHashRelease().substring(1);
 
-    zipfile.addBuffer(file.getContent(), filepath, {
-      compress: true,
-      mtime: file.getMtime(),
-      mode: null
+    zipfile.append(file.getContent(), {
+      name: filepath
     });
   });
 
-  zipfile.end(function() {
-    zipfile
-      .outputStream
-      .pipe(concatStream(function(data) {
-        var file = fis.file(root, options.filename || 'all.zip');
-        file.setContent(data);
-
-        if (!options.keep) {
-          modified.splice(0, modified.length);
-          total.splice(0, total.length);
-        }
-
-        modified.push(file);
-        total.push(file);
-        callback();
-      }))
-  });
+  zipfile.finalize();
 };
 
 module.exports.options = {
